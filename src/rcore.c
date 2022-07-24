@@ -1661,23 +1661,11 @@ int GetRenderHeight(void)
 // Get native window handle
 void *GetWindowHandle(void)
 {
-#if defined(PLATFORM_DESKTOP) && defined(_WIN32)
-    // NOTE: Returned handle is: void *HWND (windows.h)
-    return glfwGetWin32Window(CORE.Window.handle);
-#endif
-#if defined(__linux__)
-    // NOTE: Returned handle is: unsigned long Window (X.h)
-    // typedef unsigned long XID;
-    // typedef XID Window;
-    //unsigned long id = (unsigned long)glfwGetX11Window(window);
-    return NULL;    // TODO: Find a way to return value... cast to void *?
-#endif
-#if defined(__APPLE__)
-    // NOTE: Returned handle is: (objc_object *)
-    return NULL;    // TODO: return (void *)glfwGetCocoaWindow(window);
-#endif
-
+#if defined(PLATFORM_DESKTOP)
+    return (void*) CORE.Window.handle;
+#else
     return NULL;
+#endif
 }
 
 // Get number of monitors
